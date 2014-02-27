@@ -15,10 +15,10 @@
 		console.log(names);
 // todo:
 // Create log+ statements that will print each of the names array elements individually.
-		console.log(names[0]);
-		console.log(names[1]);
-		console.log(names[2]);
-		console.log(names[3]);
+		
+		names.forEach(function (element, index, array) {
+			console.log(element + '\n');
+		});
     </script>
 </body>
 </html>
