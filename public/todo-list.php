@@ -85,7 +85,7 @@ if (count($_FILES) > 0 && $_FILES['file1']['error'] ==0) {
     <h1>TODO List</h1>
     <ul>
       <? foreach($items as $key => $value) : ?>
-          <li><? echo $value; ?> | <a href=\"?key=<? echo $key; ?>\">Mark Complete</a></li>
+          <li><? echo htmlspecialchars(strip_tags($value)); ?> | <a href=?key=<? echo $key; ?>>Mark Complete</a></li>
       <? endforeach; ?>
     </ul>
 
