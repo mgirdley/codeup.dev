@@ -64,13 +64,13 @@ if (count($_FILES) > 0 && $_FILES['file1']['error'] ==0) {
     }
 }
 
-// Check if we saved a file
-if (isset($saved_filename)) {
-    // If we did, show a link to the uploaded file
-    echo "<p>You can download your file <a href='/uploads/{$filename}'>here</a>.</p>";
-}
-
 ?>
+
+<? // Check if we saved a file
+ if (isset($saved_filename)) : ?>
+    <? // If we did, show a link to the uploaded file ?>
+    <p>You can download your file <a href='/uploads/<?echo $filename; ?>'>here</a>.</p>
+<? endif; ?>
 
 
 <!DOCTYPE html>
@@ -84,12 +84,9 @@ if (isset($saved_filename)) {
   <body>
     <h1>TODO List</h1>
     <ul>
-      <?php 
-        foreach($items as $key => $value)
-        {
-          echo "<li>{$value} | <a href=\"?key={$key}\">Mark Complete</a></li>";
-        }
-      ?>
+      <? foreach($items as $key => $value) : ?>
+          <li><? echo $value; ?> | <a href=\"?key=<? echo $key; ?>\">Mark Complete</a></li>
+      <? endforeach; ?>
     </ul>
 
     <form method="POST" action="todo-list.php">
