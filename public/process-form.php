@@ -7,12 +7,12 @@
 <h1>Login Form</h1>
 
 <?php 
-    foreach($_GET as $key => $value) {
+    foreach($_POST as $key => $value) {
         echo "<p>{$key} => ${value}</p>";
     }
 ?>
 
-<form method="GET" action="/process-form.php">
+<form method="POST" action="/process-form.php">
     <p>
         <label for="username">Username</label>
         <input id="username" name="username" type="text">
