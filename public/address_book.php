@@ -4,6 +4,11 @@ class AddressDataStore {
 
     public $filename = '';
 
+    function __construct($name = 'addressbook.csv')
+    {
+        $this->filename = $name;
+    }
+
     function read_address_book()
     {
       $temp_address_book = [];
@@ -61,7 +66,7 @@ function add_entry($address_book) {
 
 $address_store = new AddressDataStore();
 
-$address_store->filename = 'addressbook.csv';
+//$address_store->filename = 'addressbook.csv';
 
 $address_book = $address_store->read_address_book($file);
 
