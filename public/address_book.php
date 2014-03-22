@@ -9,6 +9,11 @@ class AddressDataStore {
         $this->filename = $name;
     }
 
+    function __destruct() 
+    {
+        echo "Class dismissssssssed!";
+    }
+
     function read_address_book()
     {
       $temp_address_book = [];
@@ -125,5 +130,9 @@ if($_POST)
         <input type="submit" value="Upload">
     </p>
     </form>
+
+    <? unset($address_store); ?>
+
    </body>
 </html>
+
