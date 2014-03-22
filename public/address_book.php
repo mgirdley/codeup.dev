@@ -1,43 +1,41 @@
 <?
 
-$file = 'addressbook.csv';
+class AddressDataStore {
 
-$address_book = [];
+    public $filename = '';
 
-function read_file($filename)
-{
-  $temp_address_book = [];
-  $row = 1;
-  if (($handle = fopen($filename, "r")) !== FALSE) {
-     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-         $num = count($data);
-         //echo "<p> $num fields in line $row: <br /></p>\n";
-         // $row++;
-         // for ($c=0; $c < $num; $c++) {
-         //     echo $data[$c] . "<br />\n";
-
-         // }
-         $temp_entry = [$data[0],$data[1],$data[2],$data[3],$data[4]];
-         // var_dump($temp_address_book);
-         array_push($temp_address_book,$temp_entry);
-     }
+    function read_address_book()
+    {
+      $temp_address_book = [];
+      $row = 1;
+      if (($handle = fopen($this->filename, "r")) !== FALSE) {
+         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+             $num = count($data);
+             $temp_entry = [$data[0],$data[1],$data[2],$data[3],$data[4]];
+             array_push($temp_address_book,$temp_entry);
+         }
+        fclose($handle);
+      }
+      //echo "temp addy boook:";
+      // var_dump($temp_address_book);
+      return $temp_address_book;
+    }
+    
+    function write_address_book($items) 
+    {
+      $handle = fopen($this->filename, 'w');
+      // var_dump($items);
+      foreach ($items as $fields) {
+        fputcsv($handle, $fields);
+        // var_dump($fields);
+      }
     fclose($handle);
-  }
-  //echo "temp addy boook:";
-  // var_dump($temp_address_book);
-  return $temp_address_book;
+        // Code to write $addresses_array to file $this->filename
+    }
+
 }
 
-function write_to_file($filename, $items)
-{
-  $handle = fopen($filename, 'w');
-  // var_dump($items);
-  foreach ($items as $fields) {
-    fputcsv($handle, $fields);
-    // var_dump($fields);
-  }
-fclose($handle);
-}
+
 
 function add_entry($address_book) {
   // var_dump($_POST);
@@ -59,7 +57,14 @@ function add_entry($address_book) {
   return $address_book;
  }
 
-$address_book = read_file($file);
+
+
+$address_store = new AddressDataStore();
+
+$address_store->filename = 'addressbook.csv';
+
+$address_book = $address_store->read_address_book($file);
+
 // var_dump($address_book);
 
 if($_GET)
@@ -67,14 +72,14 @@ if($_GET)
   $key = $_GET['key'];
   unset($address_book[$key]);
   unset($_GET);
-  write_to_file($file, $address_book);
+  $address_store->write_address_book($address_book);
 }
 
 if($_POST)
 {
   // var_dump($address_book);
   $address_book = add_entry($address_book);
-  write_to_file($file, $address_book);
+  $address_store->write_address_book($address_book);
 }
 
 ?>
