@@ -1,6 +1,7 @@
 <?php
 
-include("address_data_store.php");
+// the class used for data stores.
+require_once("address_data_store.php");
 
 function add_entry($address_book) {
   // var_dump($_POST);
