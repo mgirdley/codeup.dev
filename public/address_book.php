@@ -1,4 +1,4 @@
-<?
+<?php
 
 class AddressDataStore {
 
@@ -40,8 +40,6 @@ class AddressDataStore {
 
 }
 
-
-
 function add_entry($address_book) {
   // var_dump($_POST);
   if (($_POST['name']!='') &&
@@ -62,8 +60,6 @@ function add_entry($address_book) {
   return $address_book;
  }
 
-
-
 $address_store = new AddressDataStore();
 
 //$address_store->filename = 'addressbook.csv';
@@ -82,41 +78,12 @@ if($_GET)
 
 if($_POST)
 {
-  // var_dump($address_book);
   $address_book = add_entry($address_book);
   $address_store->write_address_book($address_book);
 }
 
-?>
-
-<?php 
-
-// Verify there were uploaded files and no errors
-
-if (count($_FILES) > 0 && $_FILES['file1']['error'] ==0) {
-    // var_dump($_FILES);
-    if ($_FILES['file1']['type']!='text/plain') {
-        echo "<p>Sorry.  There was an error with your file upload. Is it the right file type? (text/plain) \n";
-    } else {
-      // Set the destination directory for uploads
-      $upload_dir = '/vagrant/sites/codeup.dev/public/uploads/';
-      // Grab the filename from the uploaded file by using basename
-      $filename = basename($_FILES['file1']['name']);
-      // Create the saved filename using the file's original name and our upload directory
-      $saved_filename = $upload_dir . $filename;
-      // Move the file from the temp location to our uploads directory
-      move_uploaded_file($_FILES['file1']['tmp_name'], $saved_filename);      
-    }
-}
 
 ?>
-
-<? // Check if we saved a file
- if (isset($saved_filename)) : ?>
-    <? // If we did, show a link to the uploaded file ?>
-    <p>You can download your file <a href='/uploads/<?echo $filename; ?>'>here</a>.</p>
-<? endif; ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -144,9 +111,19 @@ if (count($_FILES) > 0 && $_FILES['file1']['error'] ==0) {
       <input type="text" id="city" name="city" placeholder="Enter city">
       <input type="text" id="state" name="state" placeholder="Enter state">
       <input type="text" id="zip" name="zip" placeholder="Enter zip">
-
       <button>Add</button>
     </form>
 
+    <br>
+
+    <form method="POST" enctype="multipart/form-data" action="file-upload.php">
+    <p>
+        <label for="file">File to upload: </label>
+        <input type="file" id="file1" name="file1">
+    </p>
+    <p>
+        <input type="submit" value="Upload">
+    </p>
+    </form>
    </body>
 </html>
