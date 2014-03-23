@@ -50,7 +50,11 @@ if($_GET)
 
 if($_POST)
 {
-  $address_book = add_entry($address_book);
+  try {
+      $address_book = add_entry($address_book);
+  } catch (Exception $e) {
+    echo $e . " Please try again!\n"; 
+  }
   $address_store->write_address_book($address_book);
 }
 
