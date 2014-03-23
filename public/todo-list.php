@@ -20,10 +20,17 @@ if($_GET)
 if($_POST)
 {
   $todoitem = $_POST['todoitem'];
-  array_push($items, $todoitem);
-  // var_dump($items);
-  // var_dump($todoitem);
-  $filestore->write_lines($items);
+
+  if (strlen($todoitem)>240) {
+    throw new Exception("Error Processing Request. Your todo items is too long. Must be less than or equal to 240 chars.", 1);   
+  } elseif (strlen($todoitem)==0) {
+    throw new Exception("Error Processing Request. Your todo items is too long. Must be 1 character or longer.", 1);   
+  } else {
+    array_push($items, $todoitem);
+    // var_dump($items);
+    // var_dump($todoitem);
+    $filestore->write_lines($items);
+  }
 }
 
 ?>

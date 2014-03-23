@@ -5,6 +5,15 @@ require_once("address_data_store.php");
 
 function add_entry($address_book) {
   // var_dump($_POST);
+
+  if ((strlen($_POST['name'])>124) ||
+       (strlen($_POST['address']>124)) ||
+       (strlen($_POST['city']>124)) ||
+       (strlen($_POST['state']>124)) ||
+       (strlen($_POST['zip'])>124)) {
+    throw new Exception("Error Processing Request. Your fields cannot exceed 124 characters.", 1);
+  }
+
   if (($_POST['name']!='') &&
        ($_POST['address']!='') &&
        ($_POST['city']!='') &&
@@ -23,7 +32,7 @@ function add_entry($address_book) {
   return $address_book;
  }
 
-$address_store = new AddressDataStore();
+$address_store = new AddressDataStore("addressbook.csv");
 
 //$address_store->filename = 'addressbook.csv';
 
