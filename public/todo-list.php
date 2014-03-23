@@ -1,45 +1,29 @@
 <?
 
-$file = 'todolist.txt';
+require("filestore.php");
 
-function read_file($filename)
-{
-  $handle = fopen($filename, 'r');
-  $filesize = filesize($filename);
+$filestore = new Filestore('todolist.txt');
 
-  if($filesize > 0) {
-    $contents = trim(fread($handle, $filesize));
-    $contents_array = explode("\n", $contents);
-  } else {
-    $contents_array = array();
-  }
+$items = $filestore->read_lines();
 
-  fclose($handle);
-  return $contents_array;
-}
-
-function write_to_file($filename, $items)
-{
-  $handle = fopen($filename, 'w');
-  $items = implode("\n", $items);
-  fwrite($handle, $items);
-}
-
-$items = read_file($file);
+// var_dump($items);
+// var_dump($_POST);
 
 if($_GET)
 {
   $key = $_GET['key'];
   unset($items[$key]);
   unset($_GET);
-  write_to_file($file, $items);
+  $filestore->write_lines($items);
 }
 
 if($_POST)
 {
   $todoitem = $_POST['todoitem'];
   array_push($items, $todoitem);
-  write_to_file($file, $items);
+  // var_dump($items);
+  // var_dump($todoitem);
+  $filestore->write_lines($items);
 }
 
 ?>
